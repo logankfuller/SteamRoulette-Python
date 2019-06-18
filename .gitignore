@@ -2,6 +2,9 @@
 # Created by https://www.gitignore.io/api/git,flask,python,intellij+all,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=git,flask,python,intellij+all,visualstudiocode
 
+### Config.ini -- Holds API Key
+config.ini
+
 ### Flask ###
 instance/*
 !instance/.gitignore
