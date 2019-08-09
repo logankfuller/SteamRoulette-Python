@@ -3,6 +3,7 @@
     font-weight: 400;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 html, body {
@@ -46,6 +47,7 @@ input[type="text"]:focus {
 
 #container {
     margin: auto;
+    max-width: 225px;
 }
 
 #results {
@@ -57,9 +59,9 @@ input[type="text"]:focus {
     margin-top: 0.5em;
 }
 
-#username-error {
+#error {
     background-color: rgba(173, 38, 38, 0.72);
     text-align: center;
     display: none;
-    height: 20px;
+    padding: 5px;
 }

@@ -28,9 +28,14 @@ def spin():
         response = requests.get('https://api.steampowered.com/ISteamUser/ResolveVanityURL/v1/',
                                 params={'key': parser['api_keys']['steam'], 'vanityurl': steam_id},
                                 )
+
         json_response = response.json()
-        steam_id = json_response['response']['steamid']
-        print("Resolved vanity url as %s" % steam_id)
+        print(json_response['response']['success'])
+        if(json_response['response']['success'] == 42):
+            return 'unknown_profile'
+        else:
+            steam_id = json_response['response']['steamid']
+            print("Resolved vanity url as %s" % steam_id)
 
     # Begin to retrieve a list of games owned by the player
     response = requests.get('https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/',
@@ -40,16 +45,19 @@ def spin():
 
     # Generate a random number between 0 and the count of owned games and select a game from the list of owned games
     owned_games = response.json()
-    game_count = owned_games['response']['game_count']
-    random_number = random.randint(0, game_count-1)
-    selected_game = owned_games['response']['games'][random_number]
+    if(owned_games['response']):
+        game_count = owned_games['response']['game_count']
+        random_number = random.randint(0, game_count-1)
+        selected_game = owned_games['response']['games'][random_number]
 
-    print("Selected %s" % selected_game)
+        print("Selected %s" % selected_game)
 
-    selected_game_json = {'name': selected_game['name'], 'img_logo_url': selected_game['img_logo_url'],
-                          'app_id': selected_game['appid']}
+        selected_game_json = {'name': selected_game['name'], 'img_logo_url': selected_game['img_logo_url'],
+                              'app_id': selected_game['appid']}
 
-    return jsonify(selected_game_json)
+        return jsonify(selected_game_json)
+    else:
+        return 'private_profile'
 
 
 if __name__ == '__main__':
